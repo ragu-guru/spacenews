@@ -20,8 +20,8 @@ const MetricsPage = async () => {
   let metrics = null;
   try {
     metrics = await getMetrics();
-  } catch (error) {
-    return <Typography color="error">{error.message}</Typography>;
+  } catch (error: any) {
+    return <Typography color="error">{error?.message}</Typography>;
   }
 
   console.log(metrics);
