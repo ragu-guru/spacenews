@@ -1,17 +1,16 @@
 'use server'
 
-export const getArticles = async (offset: number, limit: number) => {
-    try {
-        console.log({ offset });
-        const url = `/api/metrics`;
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Failed to fetch articles');
-        }
-        const data = await response.json();
-        return data;
-    } catch (error: unknown) {
-        console.log(error)
-        throw new Error(`An error happened: ${error}`)
+export async function getMetrics() {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}metrics`, {
+        method: "GET",
+        cache: "no-cache", // Ensures you get fresh data on every request
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch metrics");
     }
+
+    const data = await res.json();
+    console.log("Fetched metrics:", data); // Log the fetched data
+    return data;
 }
