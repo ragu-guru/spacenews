@@ -24,7 +24,7 @@ export default async function ArticleDetailPage({
 
     // Fetch article data from the API server-side
     const res = await fetch(
-        `https://api.spaceflightnewsapi.net/v4/articles/${slug}`
+        `${process.env.SPACE_NEWS_API}${slug}`
     );
     if (!res.ok) {
         return (
@@ -35,7 +35,6 @@ export default async function ArticleDetailPage({
     }
 
     const article: ArticleDetail = await res.json();
-    console.log(article);
 
     return (
         <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>

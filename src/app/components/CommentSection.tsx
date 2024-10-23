@@ -27,7 +27,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => {
         const fetchComments = async () => {
             setLoading(true);
             try {
-                const response = await fetch(`/api/comments?articleId=${articleId}`);
+                const response = await fetch(`/api/comments/${articleId}`);
                 if (response.ok) {
                     const data = await response.json();
                     setComments(data);
