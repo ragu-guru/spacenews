@@ -29,7 +29,7 @@ const MetricsPage = async () => {
           Top 3 Commenters:
         </Typography>
         {metrics.topCommenters.map((commenter: Commenter, index: number) => (
-          <Typography key={index} variant="span" sx={{ mb: 0.5 }}>
+          <Typography key={index} component="span" sx={{ mb: 0.5 }}>
             <strong>{commenter.username}:</strong> {commenter.comment_count}{" "}
             comments {index !== 2 ? ", " : ""}
           </Typography>
