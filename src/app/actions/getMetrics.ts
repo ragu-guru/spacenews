@@ -1,7 +1,7 @@
 'use server'
 
 export async function getMetrics() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}metrics`, {
+    const res = await fetch(`${process.env.NEWS_COMMENTS_DB_API}metrics`, {
         method: "GET",
         cache: "no-cache", // Ensures you get fresh data on every request
     });
