@@ -14,7 +14,13 @@ type ArticleDetail = {
   content: string;
 };
 
-// This is a Server Component by default
+/**
+ * ArticleDetailPage component to display the details of a specific article.
+ *
+ * @param {Object} params - The route parameters.
+ * @param {string} params.slug - The slug used to fetch the article.
+ * @returns {JSX.Element} The rendered ArticleDetailPage component.
+ */
 export default async function ArticleDetailPage({
   params,
 }: {
@@ -25,6 +31,7 @@ export default async function ArticleDetailPage({
   // Fetch article data from the API server-side
   const res = await fetch(`${process.env.NEXT_PUBLIC_SPACE_NEWS_API}${slug}`);
   if (!res.ok) {
+    // Return an error message if the fetch fails
     return (
       <Container>
         <Typography variant="h6">Failed to load article.</Typography>
@@ -32,36 +39,38 @@ export default async function ArticleDetailPage({
     );
   }
 
-  const article: ArticleDetail = await res.json();
+  const article: ArticleDetail = await res.json(); // Parse the response JSON
 
   return (
     <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+      {/* Link to go back to the feed */}
       <Link href="/">
         <Button variant="contained" color="primary" sx={{ mb: 4 }}>
           &larr; Back to feed
         </Button>
       </Link>
       <Typography variant="h4" sx={{ mb: 2 }}>
-        {article.title}
+        {article.title} {/* Display article title */}
       </Typography>
       <Typography variant="body2" sx={{ color: "gray", mb: 2 }}>
-        {article.news_site}
+        {article.news_site} {/* Display the news site name */}
       </Typography>
       <Box
         component="img"
         src={article.image_url}
-        alt={article.title}
-        sx={{ width: "100%", borderRadius: 2, mb: 2 }}
+        alt={article.title} // Alternative text for the image
+        sx={{ width: "100%", borderRadius: 2, mb: 2 }} // Image styles
       />
       <Typography variant="body1" sx={{ mb: 2 }}>
-        {article.summary}
+        {article.summary} {/* Display the article summary */}
       </Typography>
       <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
-        Published at: {new Date(article.published_at).toLocaleString()}
+        Published at: {new Date(article.published_at).toLocaleString()}{" "}
+        {/* Display published date */}
       </Typography>
-
       {/* Add the Comment Section here */}
-      <CommentSection articleId={article.id} />
+      <CommentSection articleId={article.id} />{" "}
+      {/* Render the Comment Section */}
     </Container>
   );
 }

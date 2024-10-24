@@ -7,11 +7,9 @@ import {
   Button,
   Typography,
   List,
-  ListItem,
-  Divider,
   Paper,
+  CircularProgress,
 } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 
 type Comment = {
   id?: number; // id is optional initially (for optimistic updates)
@@ -24,6 +22,13 @@ type CommentSectionProps = {
   articleId: number; // Pass the article ID to fetch related comments
 };
 
+/**
+ * CommentSection component for displaying and submitting comments related to a specific article.
+ *
+ * @param {CommentSectionProps} props - The props for the component.
+ * @param {number} props.articleId - The ID of the article for which comments are being fetched and submitted.
+ * @returns {JSX.Element} The rendered CommentSection component.
+ */
 const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [username, setUsername] = useState("");
@@ -31,7 +36,13 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch comments for the specific article when the component mounts
+  /**
+   * Fetches comments for the specific article when the component mounts.
+   *
+   * @async
+   * @function fetchComments
+   * @returns {Promise<void>} A promise that resolves when the comments are fetched.
+   */
   useEffect(() => {
     const fetchComments = async () => {
       setLoading(true);
@@ -55,13 +66,20 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => {
     fetchComments();
   }, [articleId]);
 
-  // Handle comment submission
+  /**
+   * Handles the submission of a new comment.
+   *
+   * @async
+   * @function handleCommentSubmit
+   * @param {React.FormEvent} e - The event triggered by the form submission.
+   * @returns {Promise<void>} A promise that resolves when the comment is submitted.
+   */
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!username || !comment) return;
 
-    // Create a temporary comment with a current date
+    // Create a temporary comment with the current date
     const newComment: Comment = {
       username,
       comment,
@@ -90,7 +108,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => {
       } else {
         const savedComment = await response.json();
 
-        console.log({ newComment });
         // Update the comment with the data returned from the server (such as 'id')
         setComments((prevComments) =>
           prevComments.map((c) =>
