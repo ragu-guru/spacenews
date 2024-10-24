@@ -36,8 +36,9 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => {
     const fetchComments = async () => {
       setLoading(true);
       try {
+        console.log(process.env.NEXT_PUBLIC_NEWS_COMMENTS_DB_API);
         const response = await fetch(
-          `${process.env.NEWS_COMMENTS_DB_API}comments/${articleId}`
+          `${process.env.NEXT_PUBLIC_NEWS_COMMENTS_DB_API}comments/${articleId}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -70,7 +71,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => {
 
     try {
       const response = await fetch(
-        `${process.env.NEWS_COMMENTS_DB_API}comments`,
+        `${process.env.NEXT_PUBLIC_NEWS_COMMENTS_DB_API}comments`,
         {
           method: "POST",
           headers: {
